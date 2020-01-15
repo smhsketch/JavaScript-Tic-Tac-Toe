@@ -14,13 +14,13 @@ const WINNING_COMBINATIONS = [
     [2, 4, 6]
 ]
 
+var bleep = new Audio('bleep.wav')
 const cellElements = document.querySelectorAll('[data-cell]')
 const board = document.getElementById('board')
 const winningMessageElement = document.getElementById('winningMessage')
 const restartButton = document.getElementById('restartButton')
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 let circleTurn
-
 cellElements.forEach(cell => {
     cell.addEventListener('click', handleClick, { once: true })
 })
@@ -42,11 +42,11 @@ function startGame() {
 startGame()
 
 
-
 function handleClick(e) {
     const cell = e.target
     const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS // detects whose turn it is
     placeMark(cell, currentClass)
+    bleep.play()
     if (checkWin(currentClass)) {
         console.log(currentClass + ' win')
         endGame(false)
@@ -55,8 +55,6 @@ function handleClick(e) {
     } else {
         setBoardHoverClass()
     }
-    //check for win
-    //check for draw
     swapTurns()
     setBoardHoverClass()
 }
